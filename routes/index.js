@@ -12,23 +12,32 @@ router.get('/', function (req, res, next) {
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
   });
 
+  // client.get('application/rate_limit_status', {
+  // }, function (error, response) {
+  //   if (error) {
+  //     return console.log(error);
+  //   }
+  //
+  //   console.log(JSON.stringify(response));
+  // });
+
   // see https://dev.twitter.com/rest/public/search
   // see Query operators
   // see https://dev.twitter.com/rest/reference/get/search/tweets
   client.get('search/tweets', {
-    q: 'from:kobebryant',
-    result_type: 'recent',
+    // q: 'from:kobebryant',
+    q: 'China until:2017-06-19',
+    // result_type: 'recent',
     lang: 'en',
-    count: 3
+    count: 200
   }, function (error, tweets, response) {
     if (error) {
       return console.log(error);
     }
-    console.log('search: ' + tweets.statuses.length);
-    if (tweets.statuses.length > 0) {
-      console.log(tweets.statuses[0].text);
-
-    }
+    var len = tweets.statuses.length;
+    console.log('search: ' + len);
+    console.log(JSON.stringify(tweets.statuses[0]));
+    console.log(JSON.stringify(tweets.statuses[len - 1]));
   });
 
   /**
